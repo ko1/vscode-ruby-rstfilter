@@ -10,13 +10,13 @@
 		"email": "ko1@atdot.net",
 		"url": "https://www.atdot.net/~ko1/"
 	},
-	"homepage": "https://github.com/ko1/ruby-rstfilter",
+	"homepage": "https://github.com/ko1/vscode-ruby-rstfilter",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ko1/ruby-rstfilter.git"
+		"url": "https://github.com/ko1/vscode-ruby-rstfilter.git"
 	},
 	"bugs": {
-		"url": "https://github.com/ko1/ruby-rstfilter/issues"
+		"url": "https://github.com/ko1/vscode-ruby-rstfilter/issues"
 	},
 	"categories": [
 		"Other"

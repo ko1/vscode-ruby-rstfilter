@@ -1,0 +1,74 @@
+{
+  "name": "ruby-rstfilter",
+	"displayName": "Ruby's rstfilter extension",
+	"description": "Show execution results in your source code.",
+	"publisher": "KoichiSasada",
+	"version": "0.0.1",
+	"license": "MIT",
+	"author": {
+		"name": "Koichi Sasada",
+		"email": "ko1@atdot.net",
+		"url": "https://www.atdot.net/~ko1/"
+	},
+	"homepage": "https://github.com/ko1/ruby-rstfilter",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ko1/ruby-rstfilter.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ko1/ruby-rstfilter/issues"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+        "onLanguage:ruby"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"title": "ruby-rstfilter",
+			"properties": {
+			  "ruby-rstfilter.rstfilterLspPath": {
+				"type": "string",
+				"default": "rstfilter-lsp",
+				"description": "Path to rstfilter-lsp (gem rstfilter for install)"
+			  },
+			  "ruby-rstfilter.enableOnDefault": {
+				"type": "boolean",
+				"default": false,
+				"description": "Enable rstfilter extension on load"
+			  }
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.67.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "14.x",
+		"@typescript-eslint/eslint-plugin": "^5.21.0",
+		"@typescript-eslint/parser": "^5.21.0",
+		"eslint": "^8.14.0",
+		"glob": "^8.0.1",
+		"mocha": "^9.2.2",
+		"typescript": "^4.6.4",
+		"@vscode/test-electron": "^2.1.3"
+	},
+
+	"engines": {
+		"vscode": "^1.67.0"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^8.0.1"
+	}
+}
+

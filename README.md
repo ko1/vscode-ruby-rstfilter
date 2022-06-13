@@ -15,7 +15,7 @@ $ gem install rstfilter
 1. *Open* .rb file.
 2. *Click* the button on the statsus bar to enable rstfilter extension (disabled on default). 
 
-![](doc/2022-06-13-03-09-32.png)
+   ![](doc/2022-06-13-03-09-32.png)
 
 3. *Save* .rb file and you can see the results line by line on the editor window on the editor and output in the OUTPUT window at bottom.
 
@@ -25,7 +25,7 @@ $ gem install rstfilter
 
 4. *Hover* your mouse pointer on the expression in the editor window and you can see the results.
 
-![](doc/2022-06-13-03-17-16.png)
+   ![](doc/2022-06-13-03-17-16.png)
 
 5. *Edit* the script and all results are removed.
 

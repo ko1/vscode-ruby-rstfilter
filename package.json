@@ -1,9 +1,9 @@
 {
   "name": "ruby-rstfilter",
 	"displayName": "Ruby's rstfilter extension",
-	"description": "Show execution results in your source code.",
+	"description": "Show the Ruby's execution results in your source code.",
 	"publisher": "KoichiSasada",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"license": "MIT",
 	"author": {
 		"name": "Koichi Sasada",
@@ -40,7 +40,28 @@
 				"description": "Enable rstfilter extension on load"
 			  }
 			}
-		}
+		},
+		"commands": [
+			{
+				"command": "ruby-rstfilter.restart",
+				"title": "Restart ruby-rstfilter",
+				"category": "rstfilter"
+			},
+			{
+				"command": "ruby-rstfilter.save_exec_and_show",
+				"title": "Save, exec and show the execution results",
+				"category": "rstfilter"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "ruby-rstfilter.save_and_exec_show",
+				"key": "ctrl+alt+s",
+				"mac": "cmd+ctrl+s",
+				"when": "editorTextFocus"
+			}
+		]
+
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

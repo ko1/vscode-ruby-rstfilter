@@ -11,23 +11,32 @@ import {
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	const toggleCommand = vscode.commands.registerCommand("rstfilter.toggle", () => {
+	context.subscriptions.push(vscode.commands.registerCommand("ruby-rstfilter.restart", () => {
 		if (client) {
 			stopClient();
 		}
-		else {
-			startClient();
-		}
-	});
-	context.subscriptions.push(toggleCommand);
-	statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
-	disbaleStauts();
-	statusBar.show();
-
-	const loadOnDefault: boolean = vscode.workspace.getConfiguration("ruby-rstfilter").get("enableOnDefault") || false;
-	if (loadOnDefault) {
 		startClient();
-	}
+	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand("ruby-rstfilter.save_exec_and_show", async () => {
+		if (!client) {
+			client = startClient();
+		}
+
+		const editor = vscode.window.activeTextEditor;
+
+		if (editor) {
+			await editor.document.save();
+
+			if (client && editor.document.languageId == "ruby") {
+				client.sendNotification("rstfilter/start", {
+					path: editor.document.uri.path
+				});
+			}
+		}
+	}));
+
+	startClient();
 }
 
 // this method is called when your extension is deactivated
@@ -42,30 +51,32 @@ let statusBar: vscode.StatusBarItem;
 let rstfilterVersion: string;
 let rstfilterOutput: vscode.OutputChannel;
 
-function disbaleStauts() {
-	statusBar.text = "$(extensions-sync-ignored) rstfilter";
-	statusBar.tooltip = "rstfilter is disabled.";
-	statusBar.command = "rstfilter.toggle";
-}
-
 function enableStatus() {
-	statusBar.text = "$(extensions-sync-enabled) rstfilter";
+	statusBar.text = "rstfilter";
 	statusBar.tooltip = `rstfilter is enabled (${rstfilterVersion}).`;
-	statusBar.command = "rstfilter.toggle";
+	statusBar.command = "ruby-rstfilter.save_exec_and_show";
+	statusBar.show();
 }
 
 function runningStauts(target: string) {
 	statusBar.text = "$(sync~spin) rstfilter";
 	statusBar.tooltip = `target: ${target}`;
+	statusBar.command = "ruby-rstfilter.restart";
 }
 
-function errorStatus(target: string, error: string) {
-	statusBar.text = "$(testing-error-icon) rstfilter";
-	statusBar.tooltip = `rstfilter got an error for ${target}:\n${error}`;
+function deleteStatus() {
+	statusBar.hide();
+	statusBar.dispose();
 }
 
-function startClient() {
-	const rstfilterPath: string = vscode.workspace.getConfiguration("ruby-rstfilter").get("rstfilterPath") || "rstfilter";
+function startClient(): LanguageClient {
+	statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+	statusBar.text = "$(sync~spin) rstfilter"; // loading
+	statusBar.tooltip = "loading...";
+	statusBar.show();
+
+	const config = vscode.workspace.getConfiguration("ruby-rstfilter");
+	const rstfilterPath: string = config.get("rstfilterPath") || "rstfilter-lsp";
 
 	let serverOption: ServerOptions = {
 		"command": rstfilterPath,
@@ -90,12 +101,12 @@ function startClient() {
 		enableStatus();
 	  });
 
-	  client.onNotification("rstfilter/start", (params) => {
+	  client.onNotification("rstfilter/started", (params) => {
 		const uri: string = params.uri;
 		runningStauts(uri);
 	  });
 
-	  client.onNotification("rstfilter/done", (params) => {
+	  client.onNotification("rstfilter/done", (_params) => {
 		enableStatus();
 	  });
 
@@ -109,6 +120,8 @@ function startClient() {
 	  });
 
 	  client.start();
+
+	  return client;
 }
 
 function stopClient() {
@@ -117,6 +130,6 @@ function stopClient() {
 	}
 	client.stop();
 	client = undefined;
-	disbaleStauts();
+	deleteStatus();
 }
 

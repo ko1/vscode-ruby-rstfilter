@@ -55,7 +55,7 @@
 		],
 		"keybindings": [
 			{
-				"command": "ruby-rstfilter.save_and_exec_show",
+				"command": "ruby-rstfilter.save_exec_and_show",
 				"key": "ctrl+alt+s",
 				"mac": "cmd+ctrl+s",
 				"when": "editorTextFocus"

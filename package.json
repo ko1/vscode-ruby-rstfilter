@@ -3,7 +3,7 @@
 	"displayName": "Ruby's rstfilter extension",
 	"description": "Show the Ruby's execution results in your source code.",
 	"publisher": "KoichiSasada",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"license": "MIT",
 	"author": {
 		"name": "Koichi Sasada",

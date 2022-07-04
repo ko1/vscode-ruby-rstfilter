@@ -76,7 +76,7 @@ function startClient(): LanguageClient {
 	statusBar.show();
 
 	const config = vscode.workspace.getConfiguration("ruby-rstfilter");
-	const rstfilterPath: string = config.get("rstfilterPath") || "rstfilter-lsp";
+	const rstfilterPath: string = config.get("rstfilterLspPath") || "rstfilter-lsp";
 
 	let serverOption: ServerOptions = {
 		"command": rstfilterPath,

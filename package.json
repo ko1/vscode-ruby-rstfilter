@@ -33,11 +33,6 @@
 				"type": "string",
 				"default": "rstfilter-lsp",
 				"description": "Path to rstfilter-lsp (gem rstfilter for install)"
-			  },
-			  "ruby-rstfilter.enableOnDefault": {
-				"type": "boolean",
-				"default": false,
-				"description": "Enable rstfilter extension on load"
 			  }
 			}
 		},
